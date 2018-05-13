@@ -2,7 +2,6 @@
 
 These are my notes and practice excercises for the course _Computer Graphics_ at _Universidad Nacional del Sur_, Argentina.
 
-:computer:
 
 ---
 ### 00 - The most basic triangle
@@ -32,7 +31,7 @@ This project starts using the Helper libraries located at the `99 - resources` f
 > Traditionally, if you wanted to repeatedly execute specific tasks (functions) in JavaScript, you used the `methodsetInterval()`.
 However, because this JavaScript method was designed before browsers started to support multiple tabs, it executes regardless of which tab is active. This can lead to performance problems, so a new method, `requestAnimationFrame()`, was recently introduced. The function scheduled using this method is only called when the tab in which it was defined is active.
 
-<img src="https://i.imgur.com/I6bPjX8.jpg" alt="graphic figure from book" title="WebGL Programming Guide - Matsuda & Lea - Page 132" width="200" height="300">
+<img src="https://i.imgur.com/I6bPjX8.jpg" alt="graphic figure from book" title="WebGL Programming Guide - Matsuda & Lea - Page 132" width="700" height="400">
 
 _from book: WebGL Programming Guide - Kouichi Matsuda & Rodger Lea_
 
@@ -196,15 +195,14 @@ Webservers also introduce some other annoyances, like the browser caching the pa
 **Resources:**
 
 * [Indigo Code:WebGL Tutorial 03 - Textured Cube](https://www.youtube.com/watch?v=hpnd11doMgc)
-* https://open.gl/textures
-* https://stackoverflow.com/questions/5532595/how-do-opengl-texture-coordinates-work
+* [OpenGL: Textures objects and parameters](https://open.gl/textures)
+* [StackOverflow: How do opengl texture coordinates work?](https://stackoverflow.com/questions/5532595/how-do-opengl-texture-coordinates-work)
 
 ---
-### x - 
+### Bibliography
 
+<img src="https://i.imgur.com/N0xeq4E.jpg" alt="book1" width="270" height="340"> <img src="https://i.imgur.com/MnGUNkq.jpg" alt="book1" width="270" height="340"> <img src="https://i.imgur.com/VP6uj3B.jpg" alt="book1" width="270" height="340">
 
----
-### x - 
 
 
 
