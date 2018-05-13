@@ -1,11 +1,19 @@
 # Computer Graphics - WebGL Experiments
 
-These are my notes and practice excercises for the course _Computer Graphics_ at _Universidad Nacional del Sur_, Argentina.
+These are my notes and exercises for the course _Computer Graphics_ at _Universidad Nacional del Sur_, Argentina.
 
+I'm using basic WebGL1 with no extra libraries apart from gl-matrix to deal with all the math. 
+[Check if your browser supports WebGL](http://webglreport.com/)
+
+In the course we chose not to run a webserver, this means we had to rely on a few hacks to bypass browser security blocks. All the methods used are described in detail. The good part about it is that everything should work out of the box with no configuration: Just open index.html with your browser of choice.
+
+
+Below are some extra details for each practice exercise, detailing some theory and design decisions. 
 
 ---
 ### 00 - The most basic triangle
 
+The Hello World of WebGL.
 
 **Resources:**
 
@@ -73,7 +81,8 @@ function setup() {
 	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);  
 	
 	// Finish and clean-up
-	// IMPORTANT: Don't null the Array and Element buffer BEFORE the VAO or you will be unbinding them from the VAO
+	// IMPORTANT: Don't null the Array and Element buffers BEFORE the VAO
+	// or you will be unbinding them from the VAO itself.
 	vaoExtension.bindVertexArrayOES(null); // finished setting up VAO
 	gl.bindBuffer(gl.ARRAY_BUFFER, null);
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null); 
@@ -171,7 +180,7 @@ You can also do this in the terminal with openssl:
 If you want to have it in a single line so it doesn't occupy a thousand lines in your html file you can use instead:
 `$ cat texture.jpg | openssl base64 | tr -d '\n' > texture.singleline.base64`
 
-Once you have the base64 encoded image, define an <img\> tag in the html with the folloning format:
+Once you have the base64 encoded image, define an <img\> tag in the html with the following format:
 ```html
 <img id="mytexture" src="data:image/jpg;base64, <encoded image string>">
 ```
@@ -187,7 +196,7 @@ mytextureimg.crossOrigin = "anonymous";
 mytextureimg.src = "texture1_256.jpg";
 ```
 You don't event need to add anything to the HTML.
-We want our app to work on any browser, so we will use the base64 method.
+We want our app to work on any browser, so we will use the base64 method instead.
 
 Yes, all these hacks are annoying but they allow us to execute the app without having to run a webserver.
 Webservers also introduce some other annoyances, like the browser caching the page and not updating with your changes, so it's a compromise.
