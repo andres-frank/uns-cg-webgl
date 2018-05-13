@@ -31,11 +31,12 @@ This project starts using the Helper libraries located at the `99 - resources` f
 **Basic Animation**
 > Traditionally, if you wanted to repeatedly execute specific tasks (functions) in JavaScript, you used the `methodsetInterval()`.
 However, because this JavaScript method was designed before browsers started to support multiple tabs, it executes regardless of which tab is active. This can lead to performance problems, so a new method, `requestAnimationFrame()`, was recently introduced. The function scheduled using this method is only called when the tab in which it was defined is active.
-<img src="https://i.imgur.com/I6bPjX8.jpg" alt="graphic figure from book" title="WebGL Programming Guide - Matsuda & Lea - Page 132" style="width: 650px;"/>
-_from book:_ _WebGL Programming Guide \- Kouichi Matsuda \& Rodger Lea_
+
+<img src="https://i.imgur.com/I6bPjX8.jpg" alt="graphic figure from book" title="WebGL Programming Guide - Matsuda & Lea - Page 132" width="200" height="300">
+
+_from book: WebGL Programming Guide - Kouichi Matsuda & Rodger Lea_
 
  
-
 
 **Resources:**
 
