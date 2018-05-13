@@ -2,7 +2,7 @@
 
 These are my notes and exercises for the course _Computer Graphics_ at _Universidad Nacional del Sur_, Argentina.
 
-I'm using basic WebGL1 with no extra libraries apart from gl-matrix to deal with all the math. 
+I'm using basic WebGL1 with no extra libraries apart from gl-matrix to deal with all the math.  
 [Check if your browser supports WebGL](http://webglreport.com/)
 
 In the course we chose not to run a webserver, this means we had to rely on a few hacks to bypass browser security blocks. All the methods used are described in detail. The good part about it is that everything should work out of the box with no configuration: Just open index.html with your browser of choice.
@@ -118,7 +118,7 @@ Source: https://blog.tojicode.com/2012/10/oesvertexarrayobject-extension.html
 	* https://sketchfab.com/
 
 * [Alternative parser](https://github.com/vorg/geom-parse-obj)
-	- support multiple meshes in one file via g sections in the OBJ file
+	- supports multiple meshes in one file via g sections in the OBJ file
 	- returns only vertex data, so no face normals and face tex coords
 
 ---
