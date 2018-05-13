@@ -1,8 +1,8 @@
 # Computer Graphics - WebGL Experiments
 
-@author Andres Frank
-These are my notes and practice excercises for the course _Computer Graphics_ at _Universidad Nacional del Sur_.
+These are my notes and practice excercises for the course _Computer Graphics_ at _Universidad Nacional del Sur_, Argentina.
 
+:computer:
 
 ---
 ### 00 - The most basic triangle
@@ -32,8 +32,9 @@ This project starts using the Helper libraries located at the `99 - resources` f
 > Traditionally, if you wanted to repeatedly execute specific tasks (functions) in JavaScript, you used the `methodsetInterval()`.
 However, because this JavaScript method was designed before browsers started to support multiple tabs, it executes regardless of which tab is active. This can lead to performance problems, so a new method, `requestAnimationFrame()`, was recently introduced. The function scheduled using this method is only called when the tab in which it was defined is active.
 <img src="https://i.imgur.com/I6bPjX8.jpg" alt="graphic figure from book" title="WebGL Programming Guide - Matsuda & Lea - Page 132" style="width: 650px;"/>
-_from book: WebGL Programming Guide - Kouichi Matsuda & Rodger Lea_
+_from book:_ _WebGL Programming Guide \- Kouichi Matsuda \& Rodger Lea_
 
+ 
 
 
 **Resources:**
@@ -150,6 +151,7 @@ Let's make sure our OBJ Parser is correctly pulling the normals and that we can 
 
 * [Indigo Code: WebGL Tutorial 05 - Phong Lighting](https://www.youtube.com/watch?v=33gn3_khXxw)
 * [Shader Frog](https://shaderfrog.com/app/editor): A web editor to test shaders.
+* [Phong reflection model in Wikipedia](https://en.wikipedia.org/wiki/Phong_reflection_model)
 
 ---
 ### 10 - Texture
