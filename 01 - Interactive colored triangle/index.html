@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Interactive colored triangle</title>
+		<script src="app.js"></script>
+	</head>
+	<body onload="onLoad();">
+		<canvas id="webglcanvas" width="500" height="500" style='float:left;'>
+			Your browser does not support HTML5
+		</canvas>
+
+		<table border='1'>
+			<tr> Pick a color:</tr>
+			<tr>
+				<td>Red</td>
+				<td><input type="range" min="0" max="100" value="0" oninput="redSlider(this);"></td>
+			</tr>
+			<tr>
+				<td>Green</td>
+				<td><input type="range" min="0" max="100" value="0" oninput="greenSlider(this);"></td>
+			</tr>
+			<tr>
+				<td>Blue</td>
+				<td><input type="range" min="0" max="100" value="0" oninput="blueSlider(this);"></td>
+			</tr>
+		</table>
+
+	</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Spherical Camera</title>
+		<script src="../99 - Resources/gl-matrix-min.js"></script>
+		<script src="../99 - Resources/Helper.js"></script>
+		<script src="app.js"></script>
+	</head>
+
+	<body onload="onLoad();" onkeypress="onKeyDown(event);">
+		<canvas id="webglcanvas" width="500" height="500" style='float:left;'>
+			Your browser does not support HTML5
+		</canvas>
+
+		<table cellpadding="3" border="2">
+			<tr><th>Param</th><th>Control</th><th>Value</th></tr>
+			<tr>
+				<td>Radius</td>
+				<td>Press Q or E keys</td>
+				<td id='lblRadius' align="center"></td>
+			</tr>
+			<tr>
+				<td>Theta angle</td>
+				<td>Press A or D keys</td>
+				<td id='lblTheta' align="center"></td>
+			</tr>
+			<tr>
+				<td>Phi angle</td>
+				<td>Press W or S keys</td>
+				<td id="lblPhi" align="center"></td>
+			</tr>
+			<tr>
+				<td>Camera Target</td>
+				<td>Fixed</td>
+				<td>(0, 0, 0)</td>
+			</tr>
+		</table>
+	</body>
+</html>

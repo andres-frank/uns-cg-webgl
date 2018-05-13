@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Loading OBJ models</title>
+		<script src="../99 - Resources/gl-matrix-min.js"></script>
+		<script src="../99 - Resources/Helper.js"></script>
+		<script src="OBJParser.js"></script>
+		<script src="ironman.obj.js"></script>
+		<script src="app.js"></script>
+	</head>
+	<body onload="onLoad();">
+		<canvas id="webglcanvas" width="500" height="500" style='float:left;'>
+			Your browser does not support HTML5
+		</canvas>
+
+		<table cellpadding="3" border="2">
+			<tr>
+				<td>Rotate Y</td>
+				<td align="center"><input type="range" min="0" max="360" step="1" value="0" oninput="sliderRotationY(this);"></td>
+				<td id='lblRotationY' align="center">0</td>
+			</tr>
+			<tr>
+				<td>Model Color</td>
+				<td align="center"><input type='color' value="#FFFFFF" oninput="colorPicker(this)"></td>
+				<td id='lblColor' align="center"> #ffffff </td>
+			</tr>
+		</table>
+	</body>
+</html>

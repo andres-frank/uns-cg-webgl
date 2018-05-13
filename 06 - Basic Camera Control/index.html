@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Basic Camera Control</title>
+		<script src="../99 - Resources/gl-matrix-min.js"></script>
+		<script src="../99 - Resources/Helper.js"></script>
+		<script src="../99 - Resources/OBJParser.js"></script>
+		<script src="../99 - Resources/obj_models_js/ironman.obj.js"></script>
+		<script src="app.js"></script>
+	</head>
+	<body onload="onLoad();" onkeypress="onKeyDown(event);">
+		<canvas id="webglcanvas" width="500" height="500" style='float:left;'>
+			Your browser does not support HTML5
+		</canvas>
+
+		<table cellpadding="3" border="2">
+			<tr><th>Param</th><th>Control</th><th>Value</th></tr>
+			<tr>
+				<td>Camera X</td>
+				<td>Press A or D keys</td>
+				<td id='lblX' align="center">2</td>
+			</tr>
+			<tr>
+				<td>Camera Y</td>
+				<td>Press W or S keys</td>
+				<td id='lblY' align="center">2</td>
+			</tr>
+			<tr>
+				<td>Camera Z</td>
+				<td>Press Q or E keys</td>
+				<td id="lblZ" align="center">2</td>
+			</tr>
+			<tr>
+				<td>Camera Target</td>
+				<td>fixed at (0, 1, 0)</td>
+				<td></td>
+			</tr>
+		</table>
+	</body>
+</html>
