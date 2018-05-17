@@ -18,17 +18,70 @@
 
 		<table id="camera_table" cellpadding="3" border="2"></table>
 		
-		<table id="lighting" cellpadding="3" border="2">
+		<br>
+
+		<table id="lighting_table" cellpadding="3" border="2">
 			<tr>
-				<td>ka</td>
-				<td><input type="range" min="0" max="100" value="0" oninput="greenSlider(this);"></td>
-				<td id='lblColor'></td>
+				<td align="center"><b>Param</b></td>
+				<td align="center"><b>X</b></td>
+				<td align="center"><b>Y</b></td>
+				<td align="center"><b>Z</b></td>
+			</tr>
+			<tr id="ka">
+				<td>kambiente</td>
+				<td id="ka_x">
+					<input id="ka_x_range" 	type="range"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" >
+					<input id="ka_x_number" type="number"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" style="width: 3em">
+				</td>
+				<td id="ka_y">
+					<input id="ka_y_range" 	type="range"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" >
+					<input id="ka_y_number" type="number"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" style="width: 3em">
+				</td>
+				<td id="ka_z">
+					<input id="ka_z_range" 	type="range"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" >
+					<input id="ka_z_number" type="number"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" style="width: 3em">
+				</td>
+				<td>
+					<input id="ka_color" 	type='color' 	oninput="myFunction(this)" value="#FFFFFF">
+				</td>
 			</tr>
 
-			<tr>
-				<td>kd</td>
-				<td><input type='color' value="#FFFFFF" oninput="onColorModel(this)"></td>
-				<td id='lblColor'></td>
+			<tr id="kd">
+				<td>kdifuso</td>
+				<td id="kd_x">
+					<input id="kd_x_range" 	type="range"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" >
+					<input id="kd_x_number" type="number"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" style="width: 3em">
+				</td>
+				<td id="kd_y">
+					<input id="kd_y_range" 	type="range"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" >
+					<input id="kd_y_number" type="number"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" style="width: 3em">
+				</td>
+				<td id="kd_z">
+					<input id="kd_z_range" 	type="range"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" >
+					<input id="kd_z_number" type="number"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" style="width: 3em">
+				</td>
+				<td>
+					<input id="kd_color" 	type='color' 	oninput="myFunction(this)" value="#FFFFFF">
+				</td>
+			</tr>
+
+			<tr id="ke">
+				<td>kespecular</td>
+				<td id="ke_x">
+					<input id="ke_x_range" 	type="range"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" >
+					<input id="ke_x_number" type="number"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" style="width: 3em">
+				</td>
+				<td id="ke_y">
+					<input id="ke_y_range" 	type="range"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" >
+					<input id="ke_y_number" type="number"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" style="width: 3em">
+				</td>
+				<td id="ke_z">
+					<input id="ke_z_range" 	type="range"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" >
+					<input id="ke_z_number" type="number"	oninput="myFunction(this)" value="0" min="0" max="255" step="5" style="width: 3em">
+				</td>
+				<td>
+					<input id="ke_color" 	type='color' 	oninput="myFunction(this)" value="#FFFFFF">
+				</td>
 			</tr>
 		</table>
 

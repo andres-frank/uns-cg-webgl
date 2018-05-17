@@ -5,7 +5,7 @@
 * Andres Frank
 * _____________________________
 *
-* >> Most Basic Triangle <<
+* >> Basic Triangle <<
 * This is the bare minimum needed to draw the most basic thing using WebGL:
 * A triangle in 2D space with solid color.
 */

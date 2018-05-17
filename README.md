@@ -11,9 +11,11 @@ In the course we chose not to run a webserver, this means we had to rely on a fe
 Below are some extra details for each practice exercise, detailing some theory and design decisions. 
 
 ---
-### 00 - The most basic triangle
+### 00 - The basic triangle
 
-The Hello World of WebGL.
+The 'Hello World' of WebGL.  
+
+This is the bare minimum needed to draw the most basic thing using WebGL: A triangle in 2D space with solid color.
 
 **Resources:**
 
@@ -25,9 +27,16 @@ The Hello World of WebGL.
 ---
 ### 01 - Interactive colored triangle
 
+Introducing shader uniforms to pass information and interact with the object.
 
 ---
 ### 02 - Rotating 2D Triangle
+
+We make use of the glMatrix library for all the math manipulation and matrix generation. In particular, (mat4.rotate())[http://glmatrix.net/docs/module-mat4.html]
+
+**Resources:**
+
+* http://glmatrix.net/
 
 
 ---
@@ -48,7 +57,6 @@ _from book: WebGL Programming Guide - Kouichi Matsuda & Rodger Lea_
 **Resources:**
 
 * [Indigo Code: WebGL Tutorial 02 - Rotating 3D Cube](https://youtu.be/3yLL9ADo-ko)
-* http://glmatrix.net/
 
 ---
 ### 04 - Star Pyramid

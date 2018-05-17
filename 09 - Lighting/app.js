@@ -194,3 +194,130 @@ function onKeyPress(event) {
 	updateMVP(); // re-generate the MVP matrix and update it
 	render(); // draw with the new view
 }
+
+var testing;
+function myFunction(event) {
+	testing=event;
+
+
+	var element = document.getElementById(event.id);
+	var column = event.parentElement.id;
+	var row = event.parentElement.parentElement.id;
+
+	switch(event.id) {
+
+		case column + "_range":
+			document.getElementById(column + "_number").value = event.value;
+			updateColorPicker(row);
+			break;
+
+		case column + "_number":
+			document.getElementById(column + "_range").value = event.value;
+			updateColorPicker(row);
+			break;
+
+		case row + "_color":
+			
+			let rgb = hexToRgbInt(element.value);
+			let rgbf = hexToRgbFloat(element.value);
+
+			document.getElementById(row + "_x_number").value = rgb.r;
+			document.getElementById(row + "_x_range").value = rgb.r;
+
+			document.getElementById(row + "_y_number").value = rgb.g;
+			document.getElementById(row + "_y_range").value = rgb.g;
+
+			document.getElementById(row + "_z_number").value = rgb.b;
+			document.getElementById(row + "_z_range").value = rgb.b;
+
+			break;
+	}
+	
+}
+
+function updateColorPicker(row) {
+
+	var label = {
+		x: row + "_x_number",
+		y: row + "_y_number",
+		z: row + "_z_number",
+		color: row + "_color"
+	};
+
+	let x = document.getElementById(label.x).value;
+	let y = document.getElementById(label.y).value;
+	let z = document.getElementById(label.z).value;
+
+	document.getElementById(label.color).value = toHexColor(x, y, z);
+}
+
+function toHexColor(r, g, b) {
+
+	let rhex = ("0" + Number(r).toString(16)).slice(-2);
+	let ghex = ("0" + Number(g).toString(16)).slice(-2);
+	let bhex = ("0" + Number(b).toString(16)).slice(-2);
+
+    return "#" + rhex + ghex + bhex;
+}
+
+function hexToRgbInt(hex) {
+	let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+	return {
+		r: parseInt(result[1], 16),
+		g: parseInt(result[2], 16),
+		b: parseInt(result[3], 16)
+	};
+}
+
+function hexToRgbFloat(hex) {
+	let rgbInt = hexToRgbInt(hex);
+	return {
+		r: parseFloat(rgbInt.r) / 255.0,
+		g: parseFloat(rgbInt.g) / 255.0,
+		b: parseFloat(rgbInt.b) / 255.0,
+	};
+}
+
+
+
+///////////////////////////////////////////////////////////////////////
+
+
+
+function myFunction2(event) {
+
+	var numberbox = document.getElementById("kd_x_number");
+	numberbox.value = event.value;
+
+	var slider = document.getElementById("kd_x_range");
+	slider.value = event.value;
+
+	var colorpicker = document.getElementById("kd_color");
+	colorpicker.value = toHex2(event.value);
+		console.log(colorpicker.value);
+		console.log(toHex2(event.value));
+
+}
+
+
+
+function colorpicker(event) {
+	var colorpicker = document.getElementById("kd_color");
+	testing = event;
+	var myfloat = hexToRgbFloat(colorpicker.value);
+
+	var numberbox = document.getElementById("kd_x_number");
+	numberbox.value = myfloat.r;
+
+	var slider = document.getElementById("kd_x_range");
+	slider.value = myfloat.r;
+
+	console.log(colorpicker.value);
+	console.log(myfloat.r);
+}
+
+
+
+
+
+
