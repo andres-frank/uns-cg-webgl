@@ -32,7 +32,7 @@ Introducing shader uniforms to pass information and interact with the object.
 ---
 ### 02 - Rotating 2D Triangle
 
-We make use of the glMatrix library for all the math manipulation and matrix generation. In particular, (mat4.rotate())[http://glmatrix.net/docs/module-mat4.html]
+We make use of the glMatrix library for all the math manipulation and matrix generation. In particular, [mat4.rotate()](http://glmatrix.net/docs/module-mat4.html)
 
 **Resources:**
 
