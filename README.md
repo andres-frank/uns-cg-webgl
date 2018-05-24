@@ -161,8 +161,11 @@ Let's make sure our OBJ Parser is correctly pulling the normals and that we can 
 ---
 ### 09 - Lighting
 
+Phong Lighting Model with Phong Shading (per-fragment)
+Blinn-Phong lighting model shader also available.
 
 ![](https://upload.wikimedia.org/wikipedia/commons/6/6b/Phong_components_version_4.png "wikipedia page on phong lighting")
+
 
 **Resources:**
 
@@ -173,7 +176,7 @@ Let's make sure our OBJ Parser is correctly pulling the normals and that we can 
 ---
 ### 10 - Texture
 
-Loading an image file is unfortunately not trivial.
+Loading an image file is unfortunately not trivial without a webserver.
 Modern browsers refuse to load resources that do not provide from the same origin and throw a security error when attempted.
 This is a similar issue that we ran into when trying to load the shaders from external files. 
 In that case we chose to perform a little hack and define the shader code as a javascript variable, so it can be loaded from a script tag.
@@ -214,6 +217,38 @@ Webservers also introduce some other annoyances, like the browser caching the pa
 * [Indigo Code:WebGL Tutorial 03 - Textured Cube](https://www.youtube.com/watch?v=hpnd11doMgc)
 * [OpenGL: Textures objects and parameters](https://open.gl/textures)
 * [StackOverflow: How do opengl texture coordinates work?](https://stackoverflow.com/questions/5532595/how-do-opengl-texture-coordinates-work)
+
+---
+### 11 - Lighting & Texture
+
+Textured box illuminated with Phong's lighting model and Phong Shading (per-fragment)
+
+
+---
+### 12 - Lighting & Texture 2
+
+This was a practical exam on the course.
+
+The implementation includes:
+
+* Cook & Torrance lighting model with Phong Shading (per-fragment)
+* Textured object
+* Texture mixed with object's color lineally based on the Y component. i.e: the top-most part of the model has 100% texture, the bottom part has 0%.
+* 2 lights (one interactive, one hardcoded)
+* Colored lights
+
+
+**Resources:**
+
+* [Original paper by Cook and Torrance](http://inst.eecs.berkeley.edu/~cs283/sp13/lectures/cookpaper.pdf)
+* [Calculations behind the model](http://www.codinglabs.net/article_physically_based_rendering_cook_torrance.aspx) _(Warning: Math!)_
+* [An example implementation found on GitHub](https://github.com/pboechat/cook_torrance/blob/master/application/shaders/cook_torrance_textured.fs.glsl)
+
+---
+### x
+
+
+
 
 ---
 ### Bibliography

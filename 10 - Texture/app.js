@@ -113,6 +113,7 @@ function onLoad() {
 
 	// View Matrix
 	SC = new SphericalCamera(); // External module for camera control
+	SC.setCameraPosition(3, 63, 66);
 	SC.setCameraTarget(0, 1, 0);
 	viewMatrix_value = mat4.create(); // Initialize with identity matrix
 	viewMatrix_value = SC.getViewMatrix();

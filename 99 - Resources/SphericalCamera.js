@@ -64,6 +64,9 @@
  * 
  * 
  */
+
+// requires gl-matrix
+
 class SphericalCamera {
 
 	constructor() {
@@ -75,23 +78,21 @@ class SphericalCamera {
         	See SphericalCamera.js for more information.\n`
 		
 		// default (starting) camera values
-		this.camera_radius = 3;
-		this.camera_theta = 70;//degrees
-		this.camera_phi = 70;//degrees
+		this.camera_radius = 5;
+		this.camera_theta = 33;//degrees
+		this.camera_phi = 60;//degrees
+		this.camera_target = [0, 0, 0];
 
 		// how much to move in each key press
 		this.RADIUS_STEP = 0.5;
 		this.THETA_STEP = 6;
 		this.PHI_STEP = 6;
-
-		this.camera_target = [0, 0, 0];
 	
 		this.generateHTML();
 	
 		// initialize the ViewMatrix and update it with the default values
 		this.viewMatrix = mat4.create();
 		this.updateCamera();
-	
 	}
 	
 	/**
@@ -147,10 +148,10 @@ class SphericalCamera {
 		let _camera_eye = this.toCartesianArray(this.camera_radius, this.camera_theta, this.camera_phi);
 	
 		mat4.lookAt(
-			this.viewMatrix, // Where to store the resulting matrix
-			_camera_eye, // Eye: Where is the camera
+			this.viewMatrix, 	// Where to store the resulting matrix
+			_camera_eye, 		// Eye: Where is the camera
 			this.camera_target, // Target: Where is it looking
-			[0, 1, 0] 	// UP: Which side is up (here the Y+ coord means up)
+			[0, 1, 0] 			// UP: Which side is up (here the Y+ coord means up)
 		);
 	}
 	
@@ -179,56 +180,38 @@ class SphericalCamera {
 
 		switch(evt.code) {
 			case "KeyQ":
-				if (this.camera_radius < 15) { // limit of where the camera can move
-					this.camera_radius = this.camera_radius + this.RADIUS_STEP;
+				if (this.camera_radius < 10) { // limit of where the camera can move
+					this.camera_radius += this.RADIUS_STEP;
 					document.getElementById("lblRadius").innerText = this.camera_radius;
 				}
 				break;
 	
 			case "KeyE":
-				if (this.camera_radius > -15) {
-					this.camera_radius = this.camera_radius - this.RADIUS_STEP;
+				if (this.camera_radius > 1) {
+					this.camera_radius -= this.RADIUS_STEP;
 					document.getElementById("lblRadius").innerText = this.camera_radius;
 				}
 				break;
 	
 			case "KeyD":
-				aux = this.camera_theta + this.THETA_STEP;
-
-				if (aux < 360) this.camera_theta = aux; // normal rotation
-					else if (aux == 360) this.camera_theta = 0; // full rotation, keep rotating!
-						else if (aux > 360) this.camera_theta = this.THETA_STEP; // in case the STEP is not round and goes past
-				
+				this.camera_theta = (this.camera_theta + this.THETA_STEP) % 360
 				document.getElementById("lblTheta").innerText = this.camera_theta;
 				break;
 	
 			case "KeyA":
-				aux = this.camera_theta - this.THETA_STEP;
-
-				if (aux > 0) this.camera_theta = aux; // normal rotation
-					else if (aux == 0) this.camera_theta = 360; // full rotation, keep rotating!
-						else if (aux < 0) this.camera_theta = 360 - this.THETA_STEP; // in case the STEP is not round and goes past
-
+				this.camera_theta = (this.camera_theta - this.THETA_STEP) % 360
 				document.getElementById("lblTheta").innerText = this.camera_theta;
 				break;
 	
 			case "KeyW":
 				aux = this.camera_phi + this.PHI_STEP;
-
-				if (aux < 360) this.camera_phi = aux;
-					else if (aux == 360) this.camera_phi = 0;
-						else if (aux > 360) this.camera_phi = this.PHI_STEP;
-
+				if (aux <= 180) this.camera_phi = aux;
 				document.getElementById("lblPhi").innerText = this.camera_phi;
 				break;
 	
 			case "KeyS":
 				aux = this.camera_phi - this.PHI_STEP;
-
-				if (aux > 0) this.camera_phi = aux;
-					else if (aux == 0) this.camera_phi = 360;
-						else if (aux < 0) this.camera_phi = 360 - this.PHI_STEP;
-				
+				if (aux >= 1) this.camera_phi = aux;
 				document.getElementById("lblPhi").innerText = this.camera_phi;
 				break;
 		}
@@ -249,6 +232,18 @@ class SphericalCamera {
 		// Update the label
 		document.getElementById("lblTarget").innerText = "[ "+this.camera_target+" ]";
 		// Re-generate the viewMatrix with the new value
+		this.updateCamera();
+	}
+
+	setCameraPosition(radius, theta, phi) {
+		this.camera_radius = radius;
+		this.camera_theta = theta;
+		this.camera_phi = phi;
+
+		document.getElementById("lblRadius").innerText = this.camera_radius;
+		document.getElementById("lblTheta").innerText = this.camera_theta;
+		document.getElementById("lblPhi").innerText = this.camera_phi;
+		
 		this.updateCamera();
 	}
 }

@@ -5,8 +5,7 @@
 * Andres Frank
 * _____________________________
 *
-* >> Lighting <<
-* New concepts:
+* >> Lighting & Texture <<
 */
 
 // ----- Global Variables ----- //
@@ -24,6 +23,7 @@ var mvMatrix_location, mvMatrix_value;
 var mvpMatrix_location, mvpMatrix_value;
 var normalMatrix_location, normalMatrix_value;
 
+var boxtexture;
 var lightPositionSpherical;
 var SC; // SphericalCamera
 
@@ -45,13 +45,12 @@ function onLoad() {
 
 	// ----- Parse OBJ File ----- //
 	//parsedOBJ = OBJParser.parseFile(ironmanOBJSource); // imported from file "ironman.obj.js" in folder "../99 - Resources/obj_models_js/"
-	parsedOBJ = OBJParser.parseFile(teapotOBJSource);
+	parsedOBJ = OBJParser.parseFile(texturedboxOBJSource);
 	indices_length = parsedOBJ.indices.length;
 
 
 	// ----- Create the shaders and program ----- //
-	shader_program = Helper.generateProgram(gl, PhongPhong_vertexShaderSource, PhongPhong_fragmentShaderSource);
-	//shader_program = Helper.generateProgram(gl, BlinnPhongPhong_vertexShaderSource, BlinnPhongPhong_fragmentShaderSource);
+	shader_program = Helper.generateProgram(gl, PhongPhong_texture_vertexShaderSource, PhongPhong_texture_fragmentShaderSource);
 
 
 	// ----- Create Buffers ----- //
@@ -75,8 +74,8 @@ function onLoad() {
 
 	// View Matrix
 	SC = new SphericalCamera(); // External module for camera control
-	SC.setCameraPosition(3.5, 63, 60);
-	SC.setCameraTarget(0, 0.5, 0);
+	SC.setCameraTarget(0, 0, 0);
+	SC.setCameraPosition(5, 33, 60);
 	viewMatrix_value = SC.getViewMatrix();
 
 	// Projection Matrix
@@ -125,6 +124,21 @@ function onLoad() {
 	// update the uniforms with these values
 	updateCoefficients();
 	updateLightPosition();
+
+
+	// ----- Texture ----- //
+
+	// a model will have texture coordinates that we need to pass to the vertex shader.
+	let vboTexture = Helper.createVBO(gl, parsedOBJ.textures);
+	Helper.configureAttrib(gl, shader_program, vboTexture, 'vertTexture', 2);
+	//u_sampler_location = gl.getUniformLocation(shader_program, 'sampler');
+
+	// Obtain the image that will act as texture. 
+	let boxtextureimg = document.getElementById("boxtexture"); 
+
+	// We pass the image that will be used as texture to this helper function which will bind it to a gl texture object and return it.
+	// We will use that texture for drawing later, that's why the variable is global.
+	boxtexture = Helper.create2DTexture(boxtextureimg);
 
 
 	// ----- Rendering configurations ----- //
@@ -239,10 +253,19 @@ function render() {
 
 	// Since we are going to use drawElements, we need to have the index buffer
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, modelEBO);
+	
+	// We are using texture for drawing
+	gl.bindTexture(gl.TEXTURE_2D, boxtexture);
+	// Load the binded texture into the sampler in position 0. WebGL can load many textures at once,
+	// but we only have one sampler defined in the fragment shader, so it will always be 0.
+	gl.activeTexture(gl.TEXTURE0); 
+	//gl.uniform1i(shader_program.samplerUniform, 0); // don't know what this does, but doesn't seem necessary
+
 	gl.drawElements(gl.TRIANGLES, indices_length, gl.UNSIGNED_SHORT, 0);
 
 	// Best practices: clean-up.
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+	gl.bindTexture(gl.TEXTURE_2D, null);
 	gl.useProgram(null); 
 }
 

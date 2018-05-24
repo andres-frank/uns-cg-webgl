@@ -2,11 +2,11 @@
 * Universidad Nacional del Sur
 * Computacion Grafica - 2018
 *
-* Andres Frank
-* _____________________________
+* Laboratorio 2
 *
-* >> Lighting <<
-* New concepts:
+* Andres Frank
+* German Corpaz
+* _____________________________
 */
 
 // ----- Global Variables ----- //
@@ -23,9 +23,11 @@ var projMatrix_value;
 var mvMatrix_location, mvMatrix_value;
 var mvpMatrix_location, mvpMatrix_value;
 var normalMatrix_location, normalMatrix_value;
+var lightPositionSpherical, lightColor;
 
-var lightPositionSpherical;
+var ironmantexture;
 var SC; // SphericalCamera
+var minY, maxY, total;
 
 /*
  * We specified in the html <body> tag that this function is to be loaded as soon as the HTML loads.
@@ -44,21 +46,19 @@ function onLoad() {
 	
 
 	// ----- Parse OBJ File ----- //
-	//parsedOBJ = OBJParser.parseFile(ironmanOBJSource); // imported from file "ironman.obj.js" in folder "../99 - Resources/obj_models_js/"
-	parsedOBJ = OBJParser.parseFile(teapotOBJSource);
+	parsedOBJ = OBJParser.parseFile(ironmanOBJSource); // imported from file "ironman.obj.js" in folder "../99 - Resources/obj_models_js/"
 	indices_length = parsedOBJ.indices.length;
 
 
 	// ----- Create the shaders and program ----- //
-	shader_program = Helper.generateProgram(gl, PhongPhong_vertexShaderSource, PhongPhong_fragmentShaderSource);
-	//shader_program = Helper.generateProgram(gl, BlinnPhongPhong_vertexShaderSource, BlinnPhongPhong_fragmentShaderSource);
+	//shader_program = Helper.generateProgram(gl, PhongPhong_texture_vertexShaderSource, PhongPhong_texture_fragmentShaderSource);
+	shader_program = Helper.generateProgram(gl, CookTorrance_Phong_vertexShaderSource, CookTorrance_Phong_fragmentShaderSource);
 
 
 	// ----- Create Buffers ----- //
 	// I put most of the creation process in the Helper class.
 	// It would be better to have it even more modular, but it's quite complex to have something functional and modular,
 	// without sending a ton of parameters, etc.
-	
 	let vboPosition = Helper.createVBO(gl, parsedOBJ.positions);
 	Helper.configureAttrib(gl, shader_program, vboPosition, 'vertPosition', 3);
 
@@ -75,8 +75,8 @@ function onLoad() {
 
 	// View Matrix
 	SC = new SphericalCamera(); // External module for camera control
-	SC.setCameraPosition(3.5, 63, 60);
-	SC.setCameraTarget(0, 0.5, 0);
+	SC.setCameraTarget(0, 1, 0);
+	SC.setCameraPosition(3, 57, 60);
 	viewMatrix_value = SC.getViewMatrix();
 
 	// Projection Matrix
@@ -104,14 +104,18 @@ function onLoad() {
 	ka_location = gl.getUniformLocation(shader_program, 'material.ka');
 	kd_location = gl.getUniformLocation(shader_program, 'material.kd');
 	ks_location = gl.getUniformLocation(shader_program, 'material.ks');
-	specCoef_location = gl.getUniformLocation(shader_program, 'material.sf');
+	fresnel_location = gl.getUniformLocation(shader_program, 'material.f');
+	roughness_location = gl.getUniformLocation(shader_program, 'material.roughness');
 	lightPos_location = gl.getUniformLocation(shader_program, 'light.position');
+	lightColor_location = gl.getUniformLocation(shader_program, 'light.color');
+
 
 	// set the default starter values
 	updateHTMLRow("ka", 0.2, 0.2, 0.2);
-	updateHTMLRow("kd", 0, 1, 0);
+	updateHTMLRow("kd", 1, 1, 1);
 	updateHTMLRow("ks", 1, 1, 1);
-	updateHTMLRow("specCoef", 7);
+	updateHTMLRow("roughness", 0.3);
+	updateHTMLRow("fresnel", 0.4);
 
 	lightPositionSpherical = {
 		radius: 5,
@@ -122,9 +126,85 @@ function onLoad() {
 	document.getElementById("lblTheta_light").innerText = lightPositionSpherical.theta;
 	document.getElementById("lblRadius_light").innerText = lightPositionSpherical.radius;
 
+	lightColor = {
+		r: 1,
+		g: 1,
+		b: 1
+	};
+	console.info("Light Color: R=" + lightColor.r + " G=" + lightColor.g + " B=" + lightColor.b);
+
 	// update the uniforms with these values
 	updateCoefficients();
 	updateLightPosition();
+	updateLightColor();
+
+	// Second light (hardcoded)
+	let light2Pos_location = gl.getUniformLocation(shader_program, 'light2.position');
+	let light2Color_location = gl.getUniformLocation(shader_program, 'light2.color');
+
+	light2Color = {
+		r: 0,
+		g: 1,
+		b: 0
+	};
+	console.info("Light 2 Color: R=" + light2Color.r + " G=" + light2Color.g + " B=" + light2Color.b);
+
+	light2Color_value = vec3.fromValues(light2Color.r, light2Color.g, light2Color.b);
+
+	light2PositionSpherical = {
+		radius: 5,
+		theta: 100,
+		phi: 0
+	};
+
+	light2Pos_value = Utils.SphericalToCartesian(
+		light2PositionSpherical.radius,
+		light2PositionSpherical.theta,
+		light2PositionSpherical.phi
+	);
+
+
+	gl.useProgram(shader_program);
+	gl.uniform3fv(light2Pos_location, light2Pos_value);
+	gl.uniform3fv(light2Color_location, light2Color_value);
+	gl.useProgram(null);
+
+
+
+
+	// ----- Texture ----- //
+
+	// a model will have texture coordinates that we need to pass to the vertex shader.
+	let vboTexture = Helper.createVBO(gl, parsedOBJ.textures);
+	Helper.configureAttrib(gl, shader_program, vboTexture, 'vertTexture', 2);
+	//u_sampler_location = gl.getUniformLocation(shader_program, 'sampler');
+
+	// Obtain the image that will act as texture. 
+	let ironmantextureimg = document.getElementById("ironmantexture"); 
+
+	// We pass the image that will be used as texture to this helper function which will bind it to a gl texture object and return it.
+	// We will use that texture for drawing later, that's why the variable is global.
+	ironmantexture = Helper.create2DTexture(ironmantextureimg);
+
+
+	// Obtain the highest and lowest Y value to mix the texture
+
+	minY = parsedOBJ.positions[1];
+	maxY = parsedOBJ.positions[1];
+
+	for (let i=4; i < parsedOBJ.positions.length - 1; i+=3){
+		if (parsedOBJ.positions[i] > maxY) maxY = parsedOBJ.positions[i];
+		else if (parsedOBJ.positions[i] < minY) minY = parsedOBJ.positions[i];
+	}
+
+	let minY_location = gl.getUniformLocation(shader_program, 'minY');
+	let maxY_location = gl.getUniformLocation(shader_program, 'maxY');
+
+	gl.useProgram(shader_program);
+	gl.uniform1f(minY_location, minY);
+	gl.uniform1f(maxY_location, maxY);
+	gl.useProgram(null);
+
 
 
 	// ----- Rendering configurations ----- //
@@ -179,7 +259,7 @@ function updateMVP() {
 // Update the shader uniforms with the latest position
 function updateLightPosition() {
 	
-	lightPos_value = Utils.SphericalToCartesian(
+	let lightPos_value = Utils.SphericalToCartesian(
 		lightPositionSpherical.radius,
 		lightPositionSpherical.theta,
 		lightPositionSpherical.phi
@@ -187,6 +267,16 @@ function updateLightPosition() {
 
 	gl.useProgram(shader_program);
 	gl.uniform3fv(lightPos_location, lightPos_value);
+	gl.useProgram(null);
+}
+
+// Update the shader uniforms with the latest color
+function updateLightColor() {
+
+	lightColor_value = vec3.fromValues(lightColor.r, lightColor.g, lightColor.b);
+
+	gl.useProgram(shader_program);
+	gl.uniform3fv(lightColor_location, lightColor_value);
 	gl.useProgram(null);
 }
 
@@ -212,7 +302,8 @@ function updateCoefficients() {
 	z = document.getElementById("ks_z_number").value;
 	ks_value = vec3.fromValues(x, y, z);
 	
-	specCoef_value = document.getElementById("specCoef_number").value;
+	roughness_value = document.getElementById("roughness_number").value;
+	fresnel_value = document.getElementById("fresnel_number").value;
 	
 	// Update the uniforms
 	gl.useProgram(shader_program);
@@ -220,7 +311,8 @@ function updateCoefficients() {
 	gl.uniform3fv(ka_location, ka_value);
 	gl.uniform3fv(kd_location, kd_value);
 	gl.uniform3fv(ks_location, ks_value);
-	gl.uniform1f(specCoef_location, specCoef_value);
+	gl.uniform1f(roughness_location, roughness_value);
+	gl.uniform1f(fresnel_location, fresnel_value);
 
 	gl.useProgram(null);
 }
@@ -239,10 +331,19 @@ function render() {
 
 	// Since we are going to use drawElements, we need to have the index buffer
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, modelEBO);
+	
+	// We are using texture for drawing
+	gl.bindTexture(gl.TEXTURE_2D, ironmantexture);
+	// Load the binded texture into the sampler in position 0. WebGL can load many textures at once,
+	// but we only have one sampler defined in the fragment shader, so it will always be 0.
+	gl.activeTexture(gl.TEXTURE0); 
+	//gl.uniform1i(shader_program.samplerUniform, 0); // don't know what this does, but doesn't seem necessary
+
 	gl.drawElements(gl.TRIANGLES, indices_length, gl.UNSIGNED_SHORT, 0);
 
 	// Best practices: clean-up.
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null);
+	gl.bindTexture(gl.TEXTURE_2D, null);
 	gl.useProgram(null); 
 }
 
@@ -353,12 +454,20 @@ function coefficientsEventHandler(event) {
 			updateHTMLRow(row, rgbf.r, rgbf.g, rgbf.b);
 			break;
 
-		case "specCoef_range":
-			document.getElementById("specCoef_number").value = event.value;
+		case "roughness_range":
+			document.getElementById("roughness_number").value = event.value;
 			break;
 
-		case "specCoef_number":
-			document.getElementById("specCoef_range").value = event.value;
+		case "roughness_number":
+			document.getElementById("roughness_range").value = event.value;
+			break;
+
+		case "fresnel_range":
+			document.getElementById("fresnel_number").value = event.value;
+			break;
+
+		case "fresnel_number":
+			document.getElementById("fresnel_range").value = event.value;
 			break;
 	}
 
@@ -382,11 +491,11 @@ function updateHTMLColorPicker(row) {
 /**
  * Helper function for the handling of the coefficients table
  * Given a row and a group of values, update the HTML element sliders, numbers, and color pickers.
- * @param  {String} row The row that should be updated (valid options: "ka", "kd", "ks", "specCoef")
+ * @param  {String} row The row that should be updated (valid options: "ka", "kd", "ks", "roughness")
  */
 function updateHTMLRow(row, x, y ,z) {
 
-	if (row == "specCoef"){
+	if (row == "roughness" || row == "fresnel" ){
 		document.getElementById(row + "_number").value = x;
 		document.getElementById(row + "_range").value = x;
 

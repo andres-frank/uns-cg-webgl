@@ -96,4 +96,47 @@ class Helper {
 		gl.bindBuffer(gl.ARRAY_BUFFER, null);
 	}
 
+	/**
+	 * Upload the image texture to the GPU by binding it to a texture object.
+	 * 
+	 * @param gltexture  the texture object obtained via gl.createTexture()
+	 * @param imgtexture the image to be used as texture
+	 */
+	static create2DTexture(imgtexture) {
+		
+		let gltexture = gl.createTexture(); 
+
+		// bind the texture that we are going to work on
+		gl.bindTexture(gl.TEXTURE_2D, gltexture);
+
+		// texture coordinates (U,V) take the origin (0,0) at a different, opposite location,
+		// causing the textures to appear upside down. To remediate, we tell webgl to flip
+		// them so they match the screen cordinates.
+		gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+
+		// Texture coordinates are resolution independent, they won't always match a pixel exactly.
+		// We can choose from different methods to decide on the sampled color when this happens:
+		// GL_NEAREST: Returns the pixel that is closest to the coordinates.
+		// GL_LINEAR: Returns the weighted average of the 4 pixels surrounding the given coordinates.
+		// You choose one of this methods for the 2 cases of having to scale the texture down or up [MINIFY/MAGNIFY]
+		// This process is called Filtering
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+		gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+		
+		// Specify the information the texture will use, including the actual image
+		gl.texImage2D(
+			gl.TEXTURE_2D, 		// Type of texture
+			0, 					// level-of-detail. 0 for base image
+			gl.RGBA, 			// the format in which pixels should be stored on the graphics card
+			gl.RGBA, 			// just match the previous parameter
+			gl.UNSIGNED_BYTE, 	// the format of the pixels in the array that will be loaded
+			imgtexture			// the array itself, i.e the image to be used as texture
+		);
+
+		// clean up
+		gl.bindTexture(gl.TEXTURE_2D, null);
+
+		return gltexture;
+	}
+
 }
