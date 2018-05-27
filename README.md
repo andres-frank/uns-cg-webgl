@@ -164,6 +164,7 @@ Let's make sure our OBJ Parser is correctly pulling the normals and that we can 
 Phong Lighting Model with Phong Shading (per-fragment)
 Blinn-Phong lighting model shader also available.
 
+![](https://i.imgur.com/gSXEfIm.jpg "Phong Vectors graphs")
 ![](https://upload.wikimedia.org/wikipedia/commons/6/6b/Phong_components_version_4.png "wikipedia page on phong lighting")
 
 
@@ -245,10 +246,22 @@ The implementation includes:
 * [An example implementation found on GitHub](https://github.com/pboechat/cook_torrance/blob/master/application/shaders/cook_torrance_textured.fs.glsl)
 
 ---
-### x
+### 13 - Colored Spot Light
+
+Added an _attenuation factor_ that multiplies the diffuse and specular light components based on the distance of the light.
+Its function is given by:
+<img src="https://i.imgur.com/35GKRr4.jpg" alt="Attenuation Factor Function">
+where _a_, _b_, and _c_ are user-defined constants, and _d_ is the distance between the light's position and the point.
 
 
+**Resources:**
 
+* OpenGL 4 Shading Language Cookbook (2nd Ed.) - Chapther 3: Simulating a spotlight
+
+---
+### 14 -
+---
+### 15 -
 
 ---
 ### Bibliography

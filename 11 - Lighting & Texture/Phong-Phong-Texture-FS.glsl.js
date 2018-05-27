@@ -46,9 +46,16 @@ var PhongPhong_texture_fragmentShaderSource =
 
 		if (LdotN <= 0.0) specular = vec3(0.0, 0.0, 0.0); // if the light is opposite to the model we don't show it
 
-		vec4 texel = texture2D(mysampler, fragTexture); // Texture handling
+		// Attenuation factor
+		float d = distance(fragPosition, lightPosition_EyeSpace); // both in the same coord space
+		float a = 0.1; // User defined
+		float b = 0.1; // User defined
+		float c = 0.1; // User defined
+		float att = 1.0 / (a + b * d + c * pow(d, 2.0));
+
+		vec3 texel = texture2D(mysampler, fragTexture).rgb; // Texture handling
 		
-		gl_FragColor = texel * (vec4(ambient,1.0) +  vec4(diffuse, 1.0)) + vec4(specular,1.0);
+		gl_FragColor = vec4(texel * (ambient + att * (diffuse + specular)), 1.0);
 		// gl_FragColor = vec4(ambient,1.0) +  mix(vec4(diffuse, 1.0), texel, 0.5) + vec4(specular,1.0);
 		// gl_FragColor = vec4(fragNormal, 1.0);
 	}
