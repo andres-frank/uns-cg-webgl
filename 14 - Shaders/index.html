@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta charset="utf-8"/>
+<html>
+	<head>
+		<title>Shaders</title>
+		<script src="../99 - Resources/gl-matrix-min.js"></script>
+		<script src="../99 - Resources/Helper.js"></script>
+		<script src="../99 - Resources/Utils.js"></script>
+		<script src="../99 - Resources/OBJParser.js"></script>
+		<script src="../99 - Resources/SphericalCamera.js"></script>
+		<script src="../99 - Resources/textured_models/crate/texturedbox.obj.js"></script>
+		<script src="../99 - Resources/obj_models_js/teapot.obj.js"></script>
+
+		<script src="01-Phong-Phong-FS.glsl.js"></script>
+		<script src="01-Phong-Phong-VS.glsl.js"></script>
+		<script src="02-BlinnPhong-Gouraud-FS.glsl.js"></script>
+		<script src="02-BlinnPhong-Gouraud-VS.js"></script>
+		<script src="03-CookTorrance-Phong-FS.glsl.js"></script>
+		<script src="03-CookTorrance-Phong-VS.glsl.js"></script>
+		<script src="04-Toon-Phong-FS.glsl.js"></script>
+		<script src="04-Toon-Phong-VS.glsl.js"></script>
+		<script src="05-Ward-Phong-FS.glsl.js"></script>
+		<script src="05-Ward-Phong-VS.glsl.js"></script>
+		<script src="06-Border-Phong-FS.glsl.js"></script>
+		<script src="06-Border-Phong-VS.glsl.js"></script>
+		<script src="07-ProceduralTexture-FS.glsl.js"></script>
+		<script src="07-ProceduralTexture-VS.glsl.js"></script>
+		
+		<script src="app.js"></script>
+
+	</head>
+	<body onload="onLoad();">
+		<canvas id="webglcanvas" width="600" height="600" style='float:left;'>
+			Your browser does not support HTML5
+		</canvas>
+		
+		<table id="camera_table" cellpadding="3" border="2"></table>
+				
+	</body>
+</html>
