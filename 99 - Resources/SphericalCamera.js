@@ -246,4 +246,19 @@ class SphericalCamera {
 		
 		this.updateCamera();
 	}
+
+
+
+	moveHorizontally(delta) {
+		this.camera_theta += delta
+		this.updateCamera();
+	}
+
+	moveVertically(delta) {
+		this.camera_phi += delta
+		this.updateCamera();
+	}
+
+
+
 }

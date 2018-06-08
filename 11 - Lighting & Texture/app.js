@@ -108,12 +108,12 @@ function onLoad() {
 
 	// set the default starter values
 	updateHTMLRow("ka", 0.2, 0.2, 0.2);
-	updateHTMLRow("kd", 0, 1, 0);
+	updateHTMLRow("kd", 1, 1, 1);
 	updateHTMLRow("ks", 1, 1, 1);
 	updateHTMLRow("specCoef", 7);
 
 	lightPositionSpherical = {
-		radius: 5,
+		radius: 11,
 		theta: 100,
 		phi: 75
 	};

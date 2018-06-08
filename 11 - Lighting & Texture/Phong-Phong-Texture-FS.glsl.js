@@ -48,10 +48,10 @@ var PhongPhong_texture_fragmentShaderSource =
 
 		// Attenuation factor
 		float d = distance(fragPosition, lightPosition_EyeSpace); // both in the same coord space
-		float a = 0.1; // User defined
-		float b = 0.1; // User defined
-		float c = 0.1; // User defined
-		float att = 1.0 / (a + b * d + c * pow(d, 2.0));
+		float a = 0.3; // User defined
+		float b = 0.07; // User defined
+		float c = 0.0008; // User defined
+		float att = 1.0 / (a + b*d + c*d*d);
 
 		vec3 texel = texture2D(mysampler, fragTexture).rgb; // Texture handling
 		

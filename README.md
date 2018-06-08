@@ -256,10 +256,16 @@ where _a_, _b_, and _c_ are user-defined constants, and _d_ is the distance betw
 
 **Resources:**
 
-* OpenGL 4 Shading Language Cookbook (2nd Ed.) - Chapther 3: Simulating a spotlight
+* OpenGL 4 Shading Language Cookbook (2nd Ed.) - Chapter 3: Simulating a spotlight
 
 ---
-### 14 -
+### 14 - Shaders
+
+Toon shading is a non-photorealistic technique that is intended to mimic the style of shading often used in hand-drawn animation.
+The basic effect is to have large areas of constant color with sharp transitions between them. This simulates the way that an artist might shade an object using strokes of a pen or brush.
+
+* OpenGL 4 Shading Language Cookbook (2nd Ed.) - Chapter 3: Creating a cartoon shading effect
+
 ---
 ### 15 -
 
